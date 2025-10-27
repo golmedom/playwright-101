@@ -15,4 +15,7 @@ test("Menu HOME validation", async ({ page }) => {
   // await page.getByRole("link", { name: "ABOUT" }).click();
 
   await expect(page.getByRole("heading", { name: "LOGIN" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "LOGIN" })).toHaveText(
+    /Login/
+  );
 });
