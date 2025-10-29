@@ -1,61 +1,72 @@
 // @ts-check
 import { test, expect } from "@playwright/test";
+import { getCredentials } from "./data/login";
+
+test.beforeEach(async ({ page }) => {
+  await page.goto("/login");
+});
 
 test("Login successfully", async ({ page }) => {
-  await page.goto("/login");
+  const creds = getCredentials("valid");
 
-  await page.getByRole("textbox", { name: "Type your username" }).fill("test");
+  await page
+    .getByRole("textbox", { name: "Type your username" })
+    .fill(creds.username);
   await page
     .getByRole("textbox", { name: "Type your password" })
-    .fill("password123");
+    .fill(creds.password);
   await page.getByRole("button", { name: "Login" }).click();
-  await expect(page.getByText("User successfully logged in!")).toBeVisible();
+  await expect(page.getByText(creds.message)).toBeVisible();
 });
 
 test("Blocked account", async ({ page }) => {
-  await page.goto("/login");
+  const creds = getCredentials("blocked");
 
   await page
     .getByRole("textbox", { name: "Type your username" })
-    .fill("testblock");
+    .fill(creds.username);
   await page
     .getByRole("textbox", { name: "Type your password" })
-    .fill("password123");
+    .fill(creds.password);
   await page.getByRole("button", { name: "Login" }).click();
-  await expect(page.getByText("User blocked!")).toBeVisible();
+  await expect(page.getByText(creds.message)).toBeVisible();
 });
 
 test("Invalid user (User not found!)", async ({ page }) => {
-  await page.goto("/login");
+  const creds = getCredentials("notFound");
 
   await page
     .getByRole("textbox", { name: "Type your username" })
-    .fill("test-not-found");
+    .fill(creds.username);
   await page
     .getByRole("textbox", { name: "Type your password" })
-    .fill("password123-not-found");
+    .fill(creds.password);
   await page.getByRole("button", { name: "Login" }).click();
-  await expect(page.getByText("User not found!")).toBeVisible();
+  await expect(page.getByText(creds.message)).toBeVisible();
 });
 
 test("Wrong password", async ({ page }) => {
-  await page.goto("/login");
+  const creds = getCredentials("wrongPassword");
 
-  await page.getByRole("textbox", { name: "Type your username" }).fill("test");
+  await page
+    .getByRole("textbox", { name: "Type your username" })
+    .fill(creds.username);
   await page
     .getByRole("textbox", { name: "Type your password" })
-    .fill("password1234");
+    .fill(creds.password);
   await page.getByRole("button", { name: "Login" }).click();
-  await expect(page.getByText("Incorrect username or password!")).toBeVisible();
+  await expect(page.getByText(creds.message)).toBeVisible();
 });
 
 test("Wrong password 3 times (temporary block)", async ({ page }) => {
-  await page.goto("/login");
+  const creds = getCredentials("tempBlocked");
 
-  await page.getByRole("textbox", { name: "Type your username" }).fill("test");
+  await page
+    .getByRole("textbox", { name: "Type your username" })
+    .fill(creds.username);
   await page
     .getByRole("textbox", { name: "Type your password" })
-    .fill("password1234");
+    .fill(creds.password);
   await page.getByRole("button", { name: "Login" }).click();
   await page
     .getByRole("textbox", { name: "Type your password" })
