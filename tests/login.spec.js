@@ -68,13 +68,38 @@ test("Wrong password 3 times (temporary block)", async ({ page }) => {
     .getByRole("textbox", { name: "Type your password" })
     .fill(creds.password);
   await page.getByRole("button", { name: "Login" }).click();
-  await page
-    .getByRole("textbox", { name: "Type your password" })
-    .fill("password12345");
   await page.getByRole("button", { name: "Login" }).click();
-  await page
-    .getByRole("textbox", { name: "Type your password" })
-    .fill("password12346");
   await page.getByRole("button", { name: "Login" }).click();
-  await expect(page.getByText("User temporarily blocked!")).toBeVisible();
+  await expect(page.getByText(creds.message)).toBeVisible();
+});
+
+test("Test everything", async ({ page }) => {
+  const cases = [
+    "valid",
+    "blocked",
+    "notFound",
+    "wrongPassword",
+    "tempBlocked",
+  ];
+  for (const val of cases) {
+    const creds = getCredentials(val);
+    await page
+      .getByRole("textbox", { name: "Type your username" })
+      .fill(creds.username);
+    await page
+      .getByRole("textbox", { name: "Type your password" })
+      .fill(creds.password);
+    await page.getByRole("button", { name: "Login" }).click();
+
+    if (val === "tempBlocked") {
+      // TODO: check if password is array and iterate instead of this "if"
+      [1, 2].map(async () => {
+        await page
+          .getByRole("textbox", { name: "Type your password" })
+          .fill(creds.password);
+        await page.getByRole("button", { name: "Login" }).click();
+      });
+    }
+    await expect(page.getByText(creds.message)).toBeVisible();
+  }
 });
