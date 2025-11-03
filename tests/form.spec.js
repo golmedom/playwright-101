@@ -34,7 +34,7 @@ test.describe("Form submission tests", () => {
 
       await page.click("#submitBtn");
 
-      await expect(page).toHaveURL(/submitted|success|result/i);
+      await expect(page).toHaveURL(/submitted/i);
       await expect(page.getByText("Success!")).toBeVisible();
       await expect(page.getByText("The form has been submitted")).toBeVisible();
     });
