@@ -39,4 +39,20 @@ test.describe("Form submission tests", () => {
       await expect(page.getByText("The form has been submitted")).toBeVisible();
     });
   }
+
+  test("should show validation errors when submitting empty form", async ({
+    page,
+  }) => {
+    await page.click("#submitBtn");
+
+    await expect(page.getByText("The name field is required.")).toBeVisible();
+    await expect(page.getByText("The email field is required.")).toBeVisible();
+    await expect(
+      page.getByText("The password field is required.")
+    ).toBeVisible();
+    await expect(
+      page.getByText("The country field is required.")
+    ).toBeVisible();
+    await expect(page.getByText("The gender field is required.")).toBeVisible();
+  });
 });
