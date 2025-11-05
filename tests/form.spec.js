@@ -14,6 +14,12 @@ test.describe("Form submission tests", () => {
 
       await page.selectOption("#country", user.countryValue);
 
+      // await page.getByRole("radio", { name: user.gender }).check();
+      // The reason is because name is not input name and it's actually search by text and part of the test match with two options.
+      /*
+       * @ form.spec.js:20 Error: locator.check: Error: strict mode violation: getByRole('radio', { name: 'Male' }) resolved to 2 elements: 1) <input type="radio" value="male" name="gender" class="form-radio"/> aka getByRole('radio', { name: 'Male', exact: true }) 2) <input type="radio" name="gender" value="female" class="form-radio"/> aka getByRole('radio', { name: 'Female' }) Call log: - waiting for getByRole('radio', { name: 'Male' })
+       */
+
       await page
         .locator(`input[type="radio"][value="${user.genderValue}"]`) // I had to do it with this locator otherwise fails, this works like css
         .check();
