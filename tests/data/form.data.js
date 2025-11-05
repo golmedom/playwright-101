@@ -1,0 +1,77 @@
+export const USERS = [
+  {
+    scenario: "Full form",
+    name: "Bruno Silva",
+    email: "bruno.silva@example.com",
+    password: "Bruno#1234",
+    countryLabel: "Brazil",
+    countryValue: "brazil",
+    gender: "Male",
+    genderValue: "male",
+    hobbies: [
+      "Read books",
+      "Travel",
+      "Video Games",
+      "Sports",
+      "Movies",
+      "Board Games",
+    ],
+  },
+  {
+    scenario: "No Hobbies",
+    name: "Ana Souza",
+    email: "ana.souza@example.com",
+    password: "Ana#1234",
+    countryLabel: "Portugal",
+    countryValue: "portugal",
+    gender: "Female",
+    genderValue: "female",
+    hobbies: [],
+  },
+  {
+    scenario: "Multiple Hobbies",
+    name: "Rafa Costa",
+    email: "rafa.costa@example.com",
+    password: "Rafa#1234",
+    countryLabel: "Canada",
+    countryValue: "canada",
+    gender: "Other",
+    genderValue: "other",
+    hobbies: ["Movies", "Board Games"],
+  },
+  {
+    scenario: "Multiple Hobbies",
+    name: "Steve Jones",
+    email: "steve@example.com",
+    password: "Joao#1234",
+    countryLabel: 'United States of America"',
+    countryValue: "usa",
+    gender: "Male",
+    genderValue: "male",
+    hobbies: ["Video Games", "Movies", "Board Games"],
+  },
+  {
+    scenario: "Multiple Hobbies",
+    name: "Chapolim Colorado",
+    email: "xespirito@example.com",
+    password: "Marta#1234",
+    countryLabel: "Mexico",
+    countryValue: "mexico",
+    gender: "Female",
+    genderValue: "female",
+    hobbies: [],
+  },
+];
+
+export const FORM_MESSAGES = {
+  successTitle: "Success!",
+  successBody: "The form has been submitted",
+};
+
+export const ERROR_MESSAGES = {
+  name: "The name field is required.",
+  email: "The email field is required.",
+  password: "The password field is required.",
+  country: "The country field is required.",
+  gender: "The gender field is required.",
+};
